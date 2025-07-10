@@ -1,0 +1,88 @@
+.cdw-plugin-base-admin-notice {
+    background-color: #fff;
+    border-left: 4px solid #ffb900;
+    padding: 12px;
+    margin-left: 0;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+.cdw-license-status-wrapper {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    display: inline-block;
+}
+.cdw-license-status-value {
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+    color: #fff;
+}
+.cdw-license-status-active {
+    background-color: #4CAF50;
+}
+.cdw-license-status-inactive {
+    background-color: #f44336;
+}
+.cdw-license-status-expired {
+    background-color: #ff9800;
+}
+.cdw-license-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+.cdw-license-details-table th,
+.cdw-license-details-table td {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+}
+.cdw-license-details-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    width: 30%;
+}
+.cdw-license-details-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Styles for the license page content */
+.wrap h1 {
+    margin-bottom: 20px;
+}
+
+.wrap form {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin-top: 20px;
+}
+
+.wrap .form-table th {
+    width: 150px;
+}
+
+.wrap .submit .button-primary {
+    margin-top: 15px;
+}
+
+.wrap hr {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.wrap h2 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.wrap #cdw-plugin-base-cancel-button {
+    margin-top: 10px;
+}
