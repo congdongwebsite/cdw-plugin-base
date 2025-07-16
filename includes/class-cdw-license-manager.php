@@ -238,7 +238,7 @@ class CDW_License_Manager
         $data = json_decode($body, true);
 
         if (!is_array($data) || !isset($data['status'])) {
-            return new WP_Error('license_verify_invalid_response', __('Phản hồi không hợp lệ từ máy chủ giấy phép.', 'cdw-plugin-base'));
+            return new WP_Error('license_verify_invalid_response', __($data['message'] ?? 'Phản hồi không hợp lệ từ máy chủ giấy phép.', 'cdw-plugin-base'));
         }
 
         if ($data['status'] === 'valid') {
