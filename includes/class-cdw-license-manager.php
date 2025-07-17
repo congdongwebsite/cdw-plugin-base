@@ -137,7 +137,7 @@ class CDW_License_Manager
     {
         $license_key = get_option($this->license_key_option_name);
 ?>
-        <input type="text" name="<?php echo esc_attr($this->license_key_option_name); ?>" value="<?php echo esc_attr($license_key); ?>" class="regular-text" />
+        <input type="password" name="<?php echo esc_attr($this->license_key_option_name); ?>" value="<?php echo esc_attr($this->mask_license($license_key)); ?>" class="regular-text" />
 <?php
     }
 
@@ -206,6 +206,8 @@ class CDW_License_Manager
                                 $value = esc_html($value);
                                 break;
                         }
+                    } elseif ('key' === $key) {
+                        $value = $this->mask_license($value);
                     } else {
                         $value = esc_html($value);
                     }
@@ -335,7 +337,7 @@ class CDW_License_Manager
             )),
             'headers'   => array('Content-Type' => 'application/json'),
         ));
-        
+
         if (! is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
             $body = wp_remote_retrieve_body($response);
             $api_response = json_decode($body, true);
@@ -358,7 +360,8 @@ class CDW_License_Manager
         return $transient;
     }
 
-    public function cdw_plugins_api_callback($result, $action, $args) {
+    public function cdw_plugins_api_callback($result, $action, $args)
+    {
         if ($action !== 'plugin_information' || empty($args->slug) || $args->slug !== basename(CDW_PLUGIN_BASE_DIR)) {
             return $result;
         }
@@ -366,7 +369,7 @@ class CDW_License_Manager
         $license_key = get_option($this->license_key_option_name);
 
         if (empty($license_key)) {
-            return $result; 
+            return $result;
         }
 
         $api_url = trailingslashit(CDW_LICENSE_SERVER_URL) . 'plugin/info';
@@ -382,14 +385,14 @@ class CDW_License_Manager
         ));
 
         if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
-            return $result; 
+            return $result;
         }
 
         $body = wp_remote_retrieve_body($response);
         $plugin_info = json_decode($body, true);
 
         if (empty($plugin_info) || !isset($plugin_info['name'])) {
-            return $result; 
+            return $result;
         }
 
         $obj = new stdClass();
@@ -404,7 +407,7 @@ class CDW_License_Manager
         $obj->download_link = isset($plugin_info['download_link']) ? $plugin_info['download_link'] : '';
         $obj->sections = isset($plugin_info['sections']) ? $plugin_info['sections'] : array();
         $obj->banners = isset($plugin_info['banners']) ? $plugin_info['banners'] : array();
-        $obj->external = true; 
+        $obj->external = true;
 
         return $obj;
     }
@@ -415,5 +418,19 @@ class CDW_License_Manager
         delete_option($this->license_status_option_name);
         delete_option($this->license_data_option_name);
         update_option($this->last_error_option_name, sanitize_text_field($error_message));
+    }
+
+    public function mask_license($license)
+    {
+        $length = strlen($license);
+
+        if ($length >= 7) {
+            $firstThree = substr($license, 0, 3);
+            $lastFour = substr($license, -4);
+            $middleLength = $length - 7;
+            $mask = str_repeat('x', $middleLength);
+            return $firstThree . $mask . $lastFour;
+        }
+        return $license;
     }
 }
