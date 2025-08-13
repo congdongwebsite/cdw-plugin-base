@@ -111,6 +111,7 @@ class CDW_Plugin_Base {
     }
 
     public function license_page_content() {
+        do_action('cdw_plugin_base_daily_license_check');
         ?>
         <div class="wrap">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
