@@ -19,9 +19,16 @@ define( 'CDW_PLUGIN_BASE_VERSION', '1.0.0' );
 define( 'CDW_PLUGIN_BASE_FILE',  __FILE__ );
 define( 'CDW_PLUGIN_BASE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CDW_PLUGIN_BASE_URL', plugin_dir_url( __FILE__ ) );
-define( 'CDW_PLUGIN_BASE_ID', 2861 );
-define( 'CDW_LICENSE_SERVER_URL', 'https://dev2.congdongweb.com/wp-json/cdw/v1/' );
-define( 'CDW_UPDATE_SERVER_URL', 'https://dev2.congdongweb.com/wp-json/cdw/v1/' );
+define( 'CDW_PLUGIN_BASE_CODE', 'PPB' );
+define( 'CDW_PLUGIN_BASE_MODE', 'dev' );
+
+if ( ! defined( 'CDW_SERVER_URL' ) ) {
+    if ( defined( 'CDW_PLUGIN_BASE_MODE' ) && CDW_PLUGIN_BASE_MODE === 'dev' ) {
+        define( 'CDW_SERVER_URL', 'https://dev2.congdongweb.com/wp-json/cdw/v1/' );
+    } else {
+        define( 'CDW_SERVER_URL', 'https://congdongweb.com/wp-json/cdw/v1/' );
+    }
+}
 
 require_once CDW_PLUGIN_BASE_DIR . 'includes/class-cdw-license-manager.php';
 

@@ -224,11 +224,11 @@ class CDW_License_Manager
             return new WP_Error('license_key_empty', __('License Key không được để trống.', 'cdw-plugin-base'));
         }
 
-        $api_url = trailingslashit(CDW_LICENSE_SERVER_URL) . 'license/verify';
+        $api_url = trailingslashit(CDW_SERVER_URL) . 'license/verify';
         $response = wp_remote_post($api_url, array(
             'timeout'   => 15,
             'sslverify' => false,
-            'body'      => json_encode(array('license_key' => $license_key, 'plugin_id' => CDW_PLUGIN_BASE_ID)),
+            'body'      => json_encode(array('license_key' => $license_key, 'plugin_code' => CDW_PLUGIN_BASE_CODE)),
             'headers'   => array('Content-Type' => 'application/json'),
         ));
 
@@ -252,7 +252,7 @@ class CDW_License_Manager
 
     private function connect_plugin($license_key)
     {
-        $api_url = trailingslashit(CDW_LICENSE_SERVER_URL) . 'plugin/connect';
+        $api_url = trailingslashit(CDW_SERVER_URL) . 'plugin/connect';
         $response = wp_remote_post($api_url, array(
             'timeout'   => 15,
             'sslverify' => false,
@@ -261,7 +261,7 @@ class CDW_License_Manager
                 'site_url'    => home_url(),
                 'plugin_name' => 'CDW Plugin Base',
                 'version'     => CDW_PLUGIN_BASE_VERSION,
-                'plugin_id'   => CDW_PLUGIN_BASE_ID,
+                'plugin_code'   => CDW_PLUGIN_BASE_CODE,
             )),
             'headers'   => array('Content-Type' => 'application/json'),
         ));
@@ -325,14 +325,14 @@ class CDW_License_Manager
 
         $plugin_slug = basename(CDW_PLUGIN_BASE_DIR);
 
-        $api_url = trailingslashit(CDW_LICENSE_SERVER_URL) . 'plugin/update-check';
+        $api_url = trailingslashit(CDW_SERVER_URL) . 'plugin/update-check';
         $response = wp_remote_post($api_url, array(
             'timeout'   => 15,
             'sslverify' => false,
             'body'      => json_encode(array(
                 'slug'    => $plugin_slug,
                 'license_key' => $license_key,
-                'plugin_id' => CDW_PLUGIN_BASE_ID,
+                'plugin_code' => CDW_PLUGIN_BASE_CODE,
                 'version' => CDW_PLUGIN_BASE_VERSION,
             )),
             'headers'   => array('Content-Type' => 'application/json'),
@@ -372,13 +372,13 @@ class CDW_License_Manager
             return $result;
         }
 
-        $api_url = trailingslashit(CDW_LICENSE_SERVER_URL) . 'plugin/info';
+        $api_url = trailingslashit(CDW_SERVER_URL) . 'plugin/info';
         $response = wp_remote_post($api_url, array(
             'timeout'   => 15,
             'sslverify' => false,
             'body'      => json_encode(array(
                 'license_key' => $license_key,
-                'plugin_id' => CDW_PLUGIN_BASE_ID,
+                'plugin_code' => CDW_PLUGIN_BASE_CODE,
                 'slug'      => $args->slug,
             )),
             'headers'   => array('Content-Type' => 'application/json'),
